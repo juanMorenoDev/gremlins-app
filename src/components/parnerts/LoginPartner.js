@@ -30,22 +30,22 @@ const LoginPartner = () => {
           localStorage.setItem( 
             "partner",
             JSON.stringify({
-              partnerId: response.data.partnerId,
-              name: response.data.name,
-              type: response.data.type,
-              email: response.data.email,
+              partnerId: response.data.partner.partnerId,
+              name: response.data.partner.name,
+              type: response.data.partner.type,
+              email: response.data.partner.email,
 
             })
           )
           dispatch(setPartner({
-           name:response.data.name,
-           lastName:response.data.lastName,
-            documentType:response.data.documentType,
-            partnerId:response.data.partnerId,
-            phone:response.data.phone,
-            address:response.data.address,
-            email:response.data.email,
-            type:response.data.type,            
+           name:response.data.partner.name,
+           lastName:response.data.partner.lastName,
+            documentType:response.data.partner.documentType,
+            partnerId:response.data.partner.partnerId,
+            phone:response.data.partner.phone,
+            address:response.data.partner.address,
+            email:response.data.partner.email,
+            type:response.data.partner.type,            
           }))
           navigate("/home")
         })

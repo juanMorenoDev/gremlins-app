@@ -4,15 +4,16 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ClientsList from "../components/parnerts/GetClients";
 import PartnersList from "../components/parnerts/ParnertsList";
+import ProductsList from "../components/products/ProductsList";
 
 function Home() {
   const user = useSelector((state) => state.user);
   const { role } = user;
-  const partner = useSelector((state)=>state.partner )
+  const {type} = useSelector((state) => state.partner);
   //const [roleUser, setRoleUser] = useState(role);
   //const navigate = useNavigate()
-  console.log("role",role);
-  console.log("par",partner)
+  console.log("role", role);
+  console.log("par", type);
 
   /*useEffect(() => {
     if (user.token === "") {
@@ -38,6 +39,11 @@ function Home() {
             <PartnersList />
             <br />
             <ClientsList />
+          </>
+        ) : type === "CLIENTE" ? (
+          <>
+            <ProductsList />
+
           </>
         ) : (
           <h1>NO TIENES PERMISOS PARA VER ESTA PAGINA</h1>
