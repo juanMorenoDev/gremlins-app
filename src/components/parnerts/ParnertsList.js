@@ -8,10 +8,10 @@ const PartnersList = () => {
 
   // Función para obtener la lista de Partners desde el servidor
 
-  
   const fetchPartners = async () => {
     try {
       const response = await axios.get("http://localhost:3001/partner");
+      console.log(response.data)
       setPartners(response.data);
     } catch (error) {
       console.log(error);
@@ -21,14 +21,27 @@ const PartnersList = () => {
   // Función para eliminar un Partner
   const deletePartner = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/parnert/${id}`);
+      await axios.delete(`http://localhost:3001/partner/${id}`);
       // Actualizamos la lista de Partners
-      const newPartners = partners.filter((partner) => partner.id !== id);
+      const newPartners = partners.filter((partner) => partner._id !== id);
       setPartners(newPartners);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const editPartner = async (id, partners) => {
+    const partner = partners.find((partner) => partner.id === id);
+    if (!partner) {
+      return Promise.reject(`Partner with id ${id} not found`);
+    }
+
+    return axios
+      .put(`http://localhost:3001/partner/${id}`, partner)
+      .then((response) => response.data)
+      .catch((error) => Promise.reject(error));
+  };
+console.log(partners)
 
   // Función para renderizar la tabla de Partners
   const renderPartnersTable = () => {
@@ -49,9 +62,7 @@ const PartnersList = () => {
         </thead>
         <tbody>
           {partners.map((partner) => (
-            
             <tr key={partner.partnerId}>
-  
               <td>{partner.name}</td>
               <td>{partner.lastName}</td>
               <td>{partner.documentType}</td>
@@ -61,13 +72,17 @@ const PartnersList = () => {
               <td>{partner.email}</td>
               <td>{partner.type}</td>
               <td>
-                <Button variant="info" size="sm">
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={() => editPartner(partner._id, partners)}
+                >
                   Editar
                 </Button>{" "}
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => deletePartner(partner.id)}
+                  onClick={() => deletePartner(partner._id)}
                 >
                   Eliminar
                 </Button>
@@ -81,7 +96,7 @@ const PartnersList = () => {
 
   useEffect(() => {
     fetchPartners();
-  }, [partners]);
+  }, []);
 
   return (
     <div>

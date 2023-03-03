@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; 
-import { setUser } from "../redux/reducer/user/userSlice";
+import { setPartner } from "../../redux/reducer/partner/partnerSlice";
 
-const LoginForm = () => {
+const LoginPartner = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
@@ -22,7 +22,7 @@ const LoginForm = () => {
 
     if (form.checkValidity() === true) {
       axios
-        .post("http://localhost:3001/user/login", {
+        .post("http://localhost:3001/partner", {
           username: email,
           password: password,
         })
@@ -30,21 +30,21 @@ const LoginForm = () => {
           console.log(response.data);
           // Aquí puedes redirigir al usuario a la página principal de la aplicación
           localStorage.setItem( 
-            "user",
+            "partner",
             JSON.stringify({
-              userId: response.data.user.userId,
-              name: response.data.user.name,
-              role: response.data.user.role,
-              email: response.data.user.email,
-              token: response.data.token,
+              userId: response.data.partner.userId,
+              name: response.data.partner.name,
+              type: response.data.partner.type,
+              email: response.data.partner.email,
+              
             })
           )
-          dispatch(setUser({
-            userId: response.data.user.userId,
-            name: response.data.user.name,
-            role: response.data.user.role,
-            email: response.data.user.email,
-            token: response.data.token,
+          dispatch(setPartner({
+            userId: response.data.partner.userId,
+            name: response.data.partner.name,
+            type: response.data.partner.type,
+            email: response.data.partner.email,
+            
           }))
           navigate("/home")
         })
@@ -102,4 +102,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginPartner;

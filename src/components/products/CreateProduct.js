@@ -34,7 +34,7 @@ const CreateProduct = () => {
 
     // Enviamos la información del formulario al servidor
     try {
-      const response = await axios.post('http://localhost:3001/product/register', product);
+      const response = await axios.post('http://localhost:3001/product', product);
       console.log(response.data);
       // limpiamos el formulario después de enviar la información al servidor
       setProduct({

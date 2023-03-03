@@ -9,7 +9,7 @@ const CreatePartner = () => {
   const [partner, setPartner] = useState({
     name: "",
     lastName: "",
-    documentType: "",
+    documentType: "CC",
     partnerId: "",
     phone: "",
     address: "",
@@ -27,10 +27,7 @@ const CreatePartner = () => {
     event.preventDefault();
     try {
       // Validaciones
-      if (
-        partner.partnerId.length < 10 ||
-        partner.partnerId.length > 20
-      ) {
+      if (partner.partnerId.length < 10 || partner.partnerId.length > 20) {
         setPartner({
           ...partner,
           error: "El número de documento debe tener entre 11 y 14 caracteres",
@@ -43,19 +40,18 @@ const CreatePartner = () => {
       }
       // Enviar solicitud
       const response = await axios.post(
-        "http://localhost:3001/partner/register",
+        "http://localhost:3001/partner",
         partner
       );
-      console.log(response.data);
-      navigate("/parnert/parnertsList")
+      console.log(response);
+      navigate("/parnert/parnertsList");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <>
-      
+    <div className="container mt-5 p-5">
       <Form onSubmit={handleSubmit}>
         {partner.error && <p>{partner.error}</p>}
         <Form.Group controlId="name">
@@ -81,12 +77,14 @@ const CreatePartner = () => {
         <Form.Group controlId="documentType">
           <Form.Label>Tipo de documento</Form.Label>
           <Form.Control
-            type="text"
+            as="select"
             name="documentType"
             value={partner.documentType}
             onChange={handleInputChange}
-            required
-          />
+          >
+          <option value="CC">CC</option>
+          <option value="NIT">NIT</option>
+          </Form.Control>
         </Form.Group>
         <Form.Group controlId="partnerId">
           <Form.Label>ID de Partner</Form.Label>
@@ -144,7 +142,7 @@ const CreatePartner = () => {
           Crear Partner
         </Button>
       </Form>
-    </>
+    </div>
   );
 };
 
