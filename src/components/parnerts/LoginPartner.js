@@ -7,7 +7,6 @@ import { setPartner } from "../../redux/reducer/partner/partnerSlice";
 
 const LoginPartner = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -22,29 +21,31 @@ const LoginPartner = () => {
 
     if (form.checkValidity() === true) {
       axios
-        .post("http://localhost:3001/partner", {
-          username: email,
-          password: password,
+        .post("http://localhost:3001/partner/login", {
+          email: email,
         })
         .then((response) => {
-          console.log(response.data);
+          console.log("response",response.data);
           // Aquí puedes redirigir al usuario a la página principal de la aplicación
           localStorage.setItem( 
             "partner",
             JSON.stringify({
-              userId: response.data.partner.userId,
-              name: response.data.partner.name,
-              type: response.data.partner.type,
-              email: response.data.partner.email,
-              
+              partnerId: response.data.partnerId,
+              name: response.data.name,
+              type: response.data.type,
+              email: response.data.email,
+
             })
           )
           dispatch(setPartner({
-            userId: response.data.partner.userId,
-            name: response.data.partner.name,
-            type: response.data.partner.type,
-            email: response.data.partner.email,
-            
+           name:response.data.name,
+           lastName:response.data.lastName,
+            documentType:response.data.documentType,
+            partnerId:response.data.partnerId,
+            phone:response.data.phone,
+            address:response.data.address,
+            email:response.data.email,
+            type:response.data.type,            
           }))
           navigate("/home")
         })
@@ -58,9 +59,9 @@ const LoginPartner = () => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
+  /*const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-  };
+  };*/
 
   return (
     <div className="align-items-center">
@@ -80,7 +81,7 @@ const LoginPartner = () => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formBasicPassword">
+      {/*<Form.Group controlId="formBasicPassword">
         <Form.Label>Contraseña</Form.Label>
         <Form.Control
           type="password"
@@ -92,7 +93,7 @@ const LoginPartner = () => {
         <Form.Control.Feedback type="invalid">
           Por favor ingrese su contraseña.
         </Form.Control.Feedback>
-      </Form.Group>
+  </Form.Group>*/}
 
       <Button variant="primary" type="submit">
         Iniciar Sesión

@@ -4,11 +4,13 @@ const partnerSlice = createSlice({
   name: "partner",
   initialState: {
     name: "",
-    lastName: "",
-    documentType: "",
-    partnerId: "",
-    phone: "",
-    address: "",
+    lastName:"",
+    documentType:"",
+    partnerId:null,
+    phone:"",
+    address:"",
+    email:"",
+    type:"",
   },  
   reducers: {
     setPartner: (state, action) => {
@@ -18,14 +20,19 @@ const partnerSlice = createSlice({
       state.partnerId = action.payload.partnerId;
       state.phone = action.payload.phone;
       state.address = action.payload.address;
+      state.email = action.payload.email;
+      state.type = action.payload.type;
+     
     },
-     unSetPartner:(state, action)=>{
+     unSetPartner:(state)=>{
       state.name = "";
       state.lastName = "";
       state.documentType = "";
-      state.partnerId = "";
+      state.partnerId = null;
       state.phone = "";
       state.address = "";
+      state.email = "";
+      state.type = "";
      }
   },
 });

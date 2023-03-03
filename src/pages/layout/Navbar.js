@@ -4,19 +4,23 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { setUser } from "../../redux/reducer/user/userSlice";
+import { unsetUser } from "../../redux/reducer/user/userSlice"; 
+import {unSetPartner} from  "../../redux/reducer/partner/partnerSlice";
 import { useNavigate } from "react-router-dom";
 
 function NavBar() {
   const { user } = useSelector((state) => state.user);
+  const { partner } = useSelector((state) => state.partner);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    dispatch(setUser({}));
-    navigate("/login");
+    localStorage.removeItem("partner");
+    dispatch(unsetUser({}));
+    dispatch(unSetPartner({}));
+    navigate("/");
   };
   return (
     <>
@@ -31,8 +35,14 @@ function NavBar() {
             <Link to="/" className="text-decoration-none m-3 " >
               Home
             </Link>
+            <Link to="loginpartner" className="m-2">
+              <Button>Iniciar sesión Clientes</Button>
+            </Link>
+            <Link to="loginpartner" className="m-2">
+              <Button>Iniciar sesión Distribuidores</Button>
+            </Link>
             <Link to="login" className="m-2">
-              <Button>Iniciar sesión</Button>
+              <Button>Iniciar sesión Empleados</Button>
             </Link>
             <Link to="/newuser">
             <Button  className="m-2 bg-success">

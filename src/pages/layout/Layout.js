@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Login from "../Login";
+
 import Footer from "./Footer";
 import Header from "./Header";
 import NavBar from "./Navbar";
