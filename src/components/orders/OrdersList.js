@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
+import EditOrderModal from "./EditOrderModal";
 import axios from "axios";
 
 const OrdersList = () => {
   // Estado para almacenar la lista de Orders
   const [orders, setOrders] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Función para obtener la lista de Orders desde el servidor
   const fetchOrders = async () => {
@@ -27,18 +30,16 @@ const OrdersList = () => {
     }
   };
 
-  const editOrder = async (id, orders) => {
-    const order = orders.find((order) => order.id === id);
-    if (!order) {
-      return Promise.reject(`Order with id ${id} not found`);
-    }
-
-    return axios
-      .put(`http://localhost:3001/order/${id}`, order)
-      .then((response) => response.data)
-      .catch((error) => Promise.reject(error));
+  const editOrder = (order) => {
+    setIsModalOpen(true)
+    setSelectedOrder(order)
   };
-  console.log(orders)
+
+  const onClose = () => {
+    setIsModalOpen(false)
+    setSelectedOrder({})
+    fetchOrders();
+  }
 
   useEffect(() => {
     fetchOrders();
@@ -57,6 +58,8 @@ const OrdersList = () => {
             <th>Dirección</th>
             <th>Correo Electrónico</th>
             <th>Productos</th>
+            <th>Fecha de entrega</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -70,26 +73,35 @@ const OrdersList = () => {
               <td>{order.clientId.address}</td>
               <td>{order.clientId.email}</td>
               <td>
-              <ul>
+                <ul>
 
-                {
-                  order.products.map(product => (
+                  {
+                    order.products.map(product => (
                       <li key={product._id}>{product.quantity} - {product.product.name}</li>
-                      ))
-                    }
-                    </ul>
+                    ))
+                  }
+                </ul>
               </td>
+              <td>{order.deliveryDate}</td>
+              <td>{order.status}</td>
               <td>
                 <Button
                   variant="info"
                   size="sm"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    editOrder(order)
+                  }}
                 >
                   Editar
                 </Button>{" "}
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => deleteOrder(order._id)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    deleteOrder(order._id)
+                  }}
                 >
                   Eliminar
                 </Button>
@@ -98,7 +110,7 @@ const OrdersList = () => {
           ))}
         </tbody>
       </Table>
-
+      {selectedOrder._id ? <EditOrderModal selectedOrder={selectedOrder} isOpen={isModalOpen} onClose={onClose}/> : '' }
     </div>
   );
 };
