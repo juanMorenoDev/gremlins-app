@@ -76,7 +76,7 @@ const CreatePartner = () => {
         console.log(creando)
       }
 
-      navigate('/parnert/parnertsList')
+      navigate('/partner/partnersList')
     } catch (error) {
       console.log(error)
     }

@@ -22,8 +22,8 @@ function Footer () {
         <Navbar.Text>
           {user.role === 'RECEPCIONISTA' && (
             <>
-              <Link to="parnert/register" className="text-success p-3">
-                Crear Parnert
+              <Link to="partner/register" className="text-success p-3">
+                Crear Partner
               </Link>
               <Link to="products/register" className="text-success">
                 Crear Producto

@@ -87,7 +87,7 @@ const PartnersList = () => {
               <td>{partner.email}</td>
               <td>{partner.type}</td>
               <td>
-                <Link to={`/parnert/register/${partner._id}`}>
+                <Link to={`/partner/register/${partner._id}`}>
                   <Button
                     variant="info"
                     size="sm"

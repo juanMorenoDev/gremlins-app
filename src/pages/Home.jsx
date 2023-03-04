@@ -2,8 +2,8 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import OrdersList from '../components/orders/OrdersList'
-import ClientsList from '../components/parnerts/GetClients'
-import PartnersList from '../components/parnerts/ParnertsList'
+import ClientsList from '../components/partners/GetClients'
+import PartnersList from '../components/partners/PartnersList'
 import ProductsList from '../components/products/ProductsList'
 
 function Home () {
