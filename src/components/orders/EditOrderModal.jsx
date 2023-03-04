@@ -1,34 +1,33 @@
-import React, { useState } from "react";
-import { Form, Button, Modal } from "react-bootstrap";
-import axios from "axios";
+import React, { useState } from 'react'
+import { Form, Button, Modal } from 'react-bootstrap'
+import axios from 'axios'
 
 const EditOrderModal = ({ selectedOrder, isOpen, onClose }) => {
-
   const [order, setOrder] = useState({
     _id: selectedOrder._id,
     deliveryDate: selectedOrder.deliveryDate,
     status: selectedOrder.status,
-    clientId: selectedOrder.clientId._id,
-  });
+    clientId: selectedOrder.clientId._id
+  })
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setOrder({ ...order, [name]: value });
-  };
+    const { name, value } = event.target
+    setOrder({ ...order, [name]: value })
+  }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       // Enviar solicitud
-      const response = await axios.put(
-        "http://localhost:3001/order",
+      await axios.put(
+        'http://localhost:3001/order',
         order
-      );
+      )
       onClose()
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   return (
     <Modal show={isOpen} onHide={onClose}>
@@ -75,7 +74,7 @@ const EditOrderModal = ({ selectedOrder, isOpen, onClose }) => {
         </Form>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default EditOrderModal;
+export default EditOrderModal

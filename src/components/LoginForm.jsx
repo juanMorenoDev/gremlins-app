@@ -1,42 +1,42 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Form, Button } from "react-bootstrap";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; 
-import { setUser } from "../redux/reducer/user/userSlice";
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Form, Button } from 'react-bootstrap'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { setUser } from '../redux/reducer/user/userSlice'
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [validated, setValidated] = useState(false);
-  const dispatch = useDispatch();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [validated, setValidated] = useState(false)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    event.preventDefault();
+    const form = event.currentTarget
+    event.preventDefault()
     if (form.checkValidity() === false) {
-      event.stopPropagation();
+      event.stopPropagation()
     }
-    setValidated(true);
+    setValidated(true)
 
     if (form.checkValidity() === true) {
       axios
-        .post("http://localhost:3001/user/login", {
+        .post('http://localhost:3001/user/login', {
           username: email,
-          password: password,
+          password
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data)
           // Aquí puedes redirigir al usuario a la página principal de la aplicación
-          localStorage.setItem( 
-            "user",
+          localStorage.setItem(
+            'user',
             JSON.stringify({
               userId: response.data.user.userId,
               name: response.data.user.name,
               role: response.data.user.role,
               email: response.data.user.email,
-              token: response.data.token,
+              token: response.data.token
             })
           )
           dispatch(setUser({
@@ -44,23 +44,23 @@ const LoginForm = () => {
             name: response.data.user.name,
             role: response.data.user.role,
             email: response.data.user.email,
-            token: response.data.token,
+            token: response.data.token
           }))
-          navigate("/home")
+          navigate('/home')
         })
         .catch((error) => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
-  };
+  }
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
+    setEmail(event.target.value)
+  }
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+    setPassword(event.target.value)
+  }
 
   return (
     <div className=" container mt-5 align-items-center">
@@ -99,7 +99,7 @@ const LoginForm = () => {
       </Button>
     </Form>
     </div>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

@@ -1,23 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 const orderSlice = createSlice({
-  name: "order",
+  name: 'order',
   initialState: {
-    clientId: "",
+    clientId: '',
     products: [
       {
         product: {},
-        quantity: 0,
-      },
-    ],
+        quantity: 0
+      }
+    ]
   },
   reducers: {
     addProductToOrder: (state, action) => {
-      state.products = [...state.products, action.payload];
-    },
-  },
-});
+      state.products = [...state.products, action.payload]
+    }
+  }
+})
 
-export const { addProductToOrder } = orderSlice.actions;
+export const { addProductToOrder } = orderSlice.actions
 
-export default orderSlice.reducer;
+export default orderSlice.reducer

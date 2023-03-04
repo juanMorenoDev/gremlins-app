@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import { Card, Button } from "react-bootstrap";
-import { selectPartner } from "../../redux/reducer/partner/partnerSlice";
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { Card, Button } from 'react-bootstrap'
+import { selectPartner } from '../../redux/reducer/partner/partnerSlice'
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
-  const [order, setOrder] = useState({});
-  const { _id: clientId, type} = useSelector(selectPartner)
+  const [products, setProducts] = useState([])
+  const [order, setOrder] = useState({})
+  const { _id: clientId, type } = useSelector(selectPartner)
   const isClientLogged = clientId !== '' && type === 'CLIENTE'
   // Obtenemos la lista de productos desde el servidor
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/product");
-      setProducts(response.data);
+      const response = await axios.get('http://localhost:3001/product')
+      setProducts(response.data)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const addToOrder = (product) => {
     const { _id } = product
@@ -45,14 +45,14 @@ const ProductsList = () => {
       quantity
     }))
     try {
-      const response = await axios.post("http://localhost:3001/order", {
+      const response = await axios.post('http://localhost:3001/order', {
         products,
         deliveryDate: new Date().toDateString(),
         clientId
-      });
-      setProducts(response.data);
+      })
+      setProducts(response.data)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
@@ -83,9 +83,11 @@ const ProductsList = () => {
                       <strong>Cantidad:</strong> {product.quantity}
                     </Card.Text>
                     <div className="d-flex justify-content-around">
-                      {isClientLogged ? <Button variant="success" className="ml-2" onClick={() => addToOrder(product)}>
+                      {isClientLogged
+                        ? <Button variant="success" className="ml-2" onClick={() => addToOrder(product)}>
                         Agregar a la orden
-                      </Button> : ''}
+                      </Button>
+                        : ''}
                       <Button variant="primary">Editar</Button>
                       <Button variant="danger" className="ml-2">
                         Eliminar
@@ -121,8 +123,9 @@ const ProductsList = () => {
               </div>
             ))}
             {
-              Object.values(order).length <= 0 ? '' :
-                <div className="d-flex justify-content-around">
+              Object.values(order).length <= 0
+                ? ''
+                : <div className="d-flex justify-content-around">
                   <Button variant="success" onClick={createOrder}>
                     Generar Orden
                   </Button>
@@ -132,7 +135,7 @@ const ProductsList = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductsList;
+export default ProductsList

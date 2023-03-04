@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-import axios from "axios";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Form, Button } from 'react-bootstrap'
+import axios from 'axios'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const CreatePartner = () => {
-  const navigate = useNavigate();
-  const [edit, setEdit] = useState(false);
-  const { id } = useParams();
+  const navigate = useNavigate()
+  const [edit, setEdit] = useState(false)
+  const { id } = useParams()
 
   const [partner, setPartner] = useState({
-    name: "",
-    lastName: "",
-    documentType: "CC",
-    partnerId: "",
-    phone: "",
-    address: "",
-    email: "",
-    type: "CLIENTE",
-    error: "",
-  });
+    name: '',
+    lastName: '',
+    documentType: 'CC',
+    partnerId: '',
+    phone: '',
+    address: '',
+    email: '',
+    type: 'CLIENTE',
+    error: ''
+  })
 
   useEffect(() => {
     if (id) {
-      console.log("id",id)
-      setEdit(true);
+      console.log('id', id)
+      setEdit(true)
       axios.get(`http://localhost:3001/partner/${id}`).then((response) => {
-        const { data } = response;
+        const { data } = response
         console.log(data)
         setPartner({
           name: data.name,
@@ -35,54 +35,52 @@ const CreatePartner = () => {
           phone: data.phone,
           address: data.address,
           email: data.email,
-          type: data.type,
+          type: data.type
 
-        });
-      });
+        })
+      })
     }
-  }, [id]);
+  }, [id])
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setPartner({ ...partner, [name]: value });
-  };
+    const { name, value } = event.target
+    setPartner({ ...partner, [name]: value })
+  }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
       // Validaciones
       if (partner.partnerId.length < 10 || partner.partnerId.length > 20) {
         setPartner({
           ...partner,
-          error: "El número de documento debe tener entre 11 y 14 caracteres",
-        });
-        return;
+          error: 'El número de documento debe tener entre 11 y 14 caracteres'
+        })
+        return
       }
-      if (!partner.email.includes("@") || !partner.email.includes(".")) {
-        setPartner({ ...partner, error: "Debe ingresar un email válido" });
-        return;
+      if (!partner.email.includes('@') || !partner.email.includes('.')) {
+        setPartner({ ...partner, error: 'Debe ingresar un email válido' })
+        return
       }
-
-
 
       // Enviar solicitud
       if (id) {
-         const actualizando = await axios.put(`http://localhost:3001/partner/${id}`, partner);
-         console.log(actualizando)
+        const actualizando = await axios.put(`http://localhost:3001/partner/${id}`, partner)
+        console.log(actualizando)
       } else {
         const creando = await axios.post(
-          "http://localhost:3001/partner",
+          'http://localhost:3001/partner',
           partner
-        );
-        console.log(creando);
+        )
+        console.log(creando)
       }
 
-      navigate("/parnert/parnertsList");
+      navigate('/parnert/parnertsList')
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   return (
     <div className="container mt-5 p-5">
@@ -173,11 +171,11 @@ const CreatePartner = () => {
           </Form.Control>
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-5">
-          {edit? "Actualizar Partner":"Crear Partner" }
+          {edit ? 'Actualizar Partner' : 'Crear Partner' }
         </Button>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default CreatePartner;
+export default CreatePartner

@@ -1,21 +1,20 @@
-import { Routes, Route } from "react-router-dom";
-import CreatePartner from "./components/parnerts/CreateParnert";
-import PartnersList from "./components/parnerts/ParnertsList";
-import OrdersList from "./components/orders/OrdersList";
-import ProductsList from "./components/products/ProductsList";
-import Layout from "./pages/layout/Layout";
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import CreatePartner from './components/parnerts/CreateParnert'
+import PartnersList from './components/parnerts/ParnertsList'
+import OrdersList from './components/orders/OrdersList'
+import ProductsList from './components/products/ProductsList'
+import Layout from './pages/layout/Layout'
 
-import Home from "./pages/Home";
-import CreateUser from "./components/users/CreateUsers";
-import CreateProduct from "./components/products/CreateProduct";
-import LoginForm from "./components/LoginForm";
-import LoginPartner from "./components/parnerts/LoginPartner";
+import Home from './pages/Home'
+import CreateUser from './components/users/CreateUsers'
+import CreateProduct from './components/products/CreateProduct'
+import LoginForm from './components/LoginForm'
+import LoginPartner from './components/parnerts/LoginPartner'
 
-
-function App() {
+function App () {
   return (
-    
-      
+
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/newuser" element={<CreateUser />} />
@@ -30,8 +29,8 @@ function App() {
         <Route path="products" element={<ProductsList />} />
       </Route>
     </Routes>
-    
-  );
+
+  )
 }
 
-export default App;
+export default App

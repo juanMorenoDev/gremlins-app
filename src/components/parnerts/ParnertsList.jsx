@@ -1,44 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { Table, Button } from "react-bootstrap";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Table, Button } from 'react-bootstrap'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const PartnersList = () => {
   // Estado para almacenar la lista de Partners
-  const [partners, setPartners] = useState([]);
+  const [partners, setPartners] = useState([])
   console.log(partners)
-  /*const [editar, setEditar] = useState({
+  /* const [editar, setEditar] = useState({
     editar: false,
     partnerId: null,
-  })*/
-  //const navigate = useNavigate();
+  }) */
+  // const navigate = useNavigate();
 
   // Función para obtener la lista de Partners desde el servidor
 
   const fetchPartners = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/partner");
-      console.log(response.data);
-      setPartners(response.data);
+      const response = await axios.get('http://localhost:3001/partner')
+      console.log(response.data)
+      setPartners(response.data)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   // Función para eliminar un Partner
   const deletePartner = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/partner/${id}`);
+      await axios.delete(`http://localhost:3001/partner/${id}`)
       // Actualizamos la lista de Partners
-      const newPartners = partners.filter((partner) => partner._id !== id);
-      setPartners(newPartners);
+      const newPartners = partners.filter((partner) => partner._id !== id)
+      setPartners(newPartners)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
-  /*const editPartner = async (id) => {
+  /* const editPartner = async (id) => {
     console.log("miid", id);
     navigate("/home");
 
@@ -56,8 +55,8 @@ const PartnersList = () => {
       .put(`http://localhost:3001/partner/${id}`, partner)
       .then((response) => response.data)
       .catch((error) => Promise.reject(error));
-    
-  };*/
+
+  }; */
 
   // Función para renderizar la tabla de Partners
   const renderPartnersTable = () => {
@@ -78,7 +77,6 @@ const PartnersList = () => {
         </thead>
         <tbody>
           {partners.map((partner) => (
-            console.log(partner._id),
             <tr key={partner.partnerId}>
               <td>{partner.name}</td>
               <td>{partner.lastName}</td>
@@ -94,12 +92,12 @@ const PartnersList = () => {
                     variant="info"
                     size="sm"
                     /*                 onClick={() => //editPartner(partner._id, console.log("ir")
-                  
-                  }*/
+
+                  } */
                   >
                     Editar
                   </Button>
-                </Link>{" "}
+                </Link>{' '}
                 <Button
                   variant="danger"
                   size="sm"
@@ -112,19 +110,19 @@ const PartnersList = () => {
           ))}
         </tbody>
       </Table>
-    );
-  };
+    )
+  }
 
   useEffect(() => {
-    fetchPartners();
-  }, []);
+    fetchPartners()
+  }, [])
 
   return (
     <div>
       <h1>Lista de Partners</h1>
       {renderPartnersTable()}
     </div>
-  );
-};
+  )
+}
 
-export default PartnersList;
+export default PartnersList

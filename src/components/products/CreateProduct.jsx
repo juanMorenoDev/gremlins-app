@@ -1,55 +1,55 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import React, { useState } from 'react'
+import axios from 'axios'
+import { Form, Button } from 'react-bootstrap'
 
 const CreateProduct = () => {
   const [product, setProduct] = useState({
-    partnerId: "",
-    name: "",
-    quantity: "",
-  });
-  const [error, setError] = useState("");
+    partnerId: '',
+    name: '',
+    quantity: ''
+  })
+  const [error, setError] = useState('')
 
   const handleInputChange = (event) => {
     setProduct({
       ...product,
-      [event.target.name]: event.target.value,
-    });
-  };
+      [event.target.name]: event.target.value
+    })
+  }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     // Validamos los campos requeridos
     if (!product.partnerId || !product.name || !product.quantity) {
-      setError("Por favor ingrese todos los campos requeridos.");
-      return;
+      setError('Por favor ingrese todos los campos requeridos.')
+      return
     }
 
     // Validamos que la cantidad sea un número positivo
     if (product.quantity <= 0) {
-      setError("La cantidad debe ser un número positivo.");
-      return;
+      setError('La cantidad debe ser un número positivo.')
+      return
     }
 
     // Enviamos la información del formulario al servidor
     try {
       const response = await axios.post(
-        "http://localhost:3001/product",
+        'http://localhost:3001/product',
         product
-      );
-      console.log(response.data);
+      )
+      console.log(response.data)
       // limpiamos el formulario después de enviar la información al servidor
       setProduct({
-        partnerId: "",
-        name: "",
-        quantity: "",
-      });
-      setError("");
+        partnerId: '',
+        name: '',
+        quantity: ''
+      })
+      setError('')
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   return (
     <div className="container mt-5">
@@ -88,7 +88,7 @@ const CreateProduct = () => {
         </Button>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default CreateProduct;
+export default CreateProduct

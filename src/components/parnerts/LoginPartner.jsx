@@ -1,38 +1,38 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Form, Button } from "react-bootstrap";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { setPartner } from "../../redux/reducer/partner/partnerSlice";
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Form, Button } from 'react-bootstrap'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { setPartner } from '../../redux/reducer/partner/partnerSlice'
 
 const LoginPartner = () => {
-  const [email, setEmail] = useState("");
-  const [validated, setValidated] = useState(false);
-  const dispatch = useDispatch();
+  const [email, setEmail] = useState('')
+  const [validated, setValidated] = useState(false)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    event.preventDefault();
+    const form = event.currentTarget
+    event.preventDefault()
     if (form.checkValidity() === false) {
-      event.stopPropagation();
+      event.stopPropagation()
     }
-    setValidated(true);
+    setValidated(true)
 
     if (form.checkValidity() === true) {
       axios
-        .post("http://localhost:3001/partner/login", {
-          email: email,
+        .post('http://localhost:3001/partner/login', {
+          email
         })
         .then(({ data }) => {
           // Aquí puedes redirigir al usuario a la página principal de la aplicación
           localStorage.setItem(
-            "partner",
+            'partner',
             JSON.stringify({
               partnerId: data.partner.partnerId,
               name: data.partner.name,
               type: data.partner.type,
-              email: data.partner.email,
+              email: data.partner.email
 
             })
           )
@@ -45,23 +45,23 @@ const LoginPartner = () => {
             phone: data.partner.phone,
             address: data.partner.address,
             email: data.partner.email,
-            type: data.partner.type,
+            type: data.partner.type
           }))
-          navigate("/home")
+          navigate('/home')
         })
         .catch((error) => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
-  };
+  }
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
+    setEmail(event.target.value)
+  }
 
-  /*const handlePasswordChange = (event) => {
+  /* const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-  };*/
+  }; */
 
   return (
     <div className=" container mt-5">
@@ -81,7 +81,7 @@ const LoginPartner = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
-        {/*<Form.Group controlId="formBasicPassword">
+        {/* <Form.Group controlId="formBasicPassword">
         <Form.Label>Contraseña</Form.Label>
         <Form.Control
           type="password"
@@ -93,14 +93,14 @@ const LoginPartner = () => {
         <Form.Control.Feedback type="invalid">
           Por favor ingrese su contraseña.
         </Form.Control.Feedback>
-  </Form.Group>*/}
+  </Form.Group> */}
 
-        <Button  className="mt-3" variant="primary" type="submit">
+        <Button className="mt-3" variant="primary" type="submit">
           Iniciar Sesión
         </Button>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPartner;
+export default LoginPartner

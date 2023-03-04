@@ -1,68 +1,68 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { Form, Button } from "react-bootstrap";
+import React, { useState } from 'react'
+import axios from 'axios'
+import { Form, Button } from 'react-bootstrap'
 
 const CreateUser = () => {
   const [user, setUser] = useState({
-    userId: "",
-    password: "",
-    name: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    address: "",
-    role: "",
-  });
+    userId: '',
+    password: '',
+    name: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    address: '',
+    role: ''
+  })
 
   const handleChange = (event) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
+    setUser({ ...user, [event.target.name]: event.target.value })
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     // Validaciones
     if (
-      user.userId === "" ||
-      user.password === "" ||
-      user.name === "" ||
-      user.email === "" ||
-      user.role === ""
+      user.userId === '' ||
+      user.password === '' ||
+      user.name === '' ||
+      user.email === '' ||
+      user.role === ''
     ) {
-      alert("Por favor complete todos los campos obligatorios.");
-      return;
+      alert('Por favor complete todos los campos obligatorios.')
+      return
     }
     if (!/^([0-9])*$/.test(user.userId)) {
-      alert("El userID debe ser un número entero.");
-      return;
+      alert('El userID debe ser un número entero.')
+      return
     }
     if (!/^[a-zA-Z]+$/.test(user.name) || !/^[a-zA-Z]+$/.test(user.lastName)) {
-      alert("El nombre y el apellido solo deben contener letras.");
-      return;
+      alert('El nombre y el apellido solo deben contener letras.')
+      return
     }
     if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(user.email)) {
-      alert("Ingrese un correo electrónico válido.");
-      return;
+      alert('Ingrese un correo electrónico válido.')
+      return
     }
     // Enviar información al backend
     axios
-      .post("http://localhost:3001/user/register", user)
+      .post('http://localhost:3001/user/register', user)
       .then((response) => {
         setUser({
-          userId: "",
-          password: "",
-          name: "",
-          lastName: "",
-          phone: "",
-          email: "",
-          address: "",
-          role: "",
-        });
-        alert(`Binvenido ${user.name}`);
+          userId: '',
+          password: '',
+          name: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          address: '',
+          role: ''
+        })
+        alert(`Binvenido ${user.name}`)
       })
       .catch((error) => {
-        alert(error.response.data.message);
-      });
-  };
+        alert(error.response.data.message)
+      })
+  }
 
   return (
     <div className="container border- p-5" >
@@ -163,7 +163,7 @@ const CreateUser = () => {
         </Button>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default CreateUser;
+export default CreateUser
