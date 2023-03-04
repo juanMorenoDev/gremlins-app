@@ -27,30 +27,38 @@ function NavBar () {
     <>
       <Navbar bg="dark " variant="dark">
         <Container>
-          <Nav className="justify-content-start">
-            <Link to="/" className="text-decoration-none m-3">
-              Gremlins
+          <Nav className="justify-content-start align-items-center">
+            <Link to="/" className="fw-bold text-decoration-none text-light m-3">
+              GREMLINS
             </Link>
 
-            <Link to="/" className="text-decoration-none m-3 ">
+            <Link to="/" className="text-decoration-none text-light m-3 ">
               Home
             </Link>
+            {partner.type === 'CLIENTE' && (<>
+              <Link Link to="orders" className="text-decoration-none text-light m-3">
+                Ver ordenes
+              </Link>
+              <Link Link to="products" className="text-decoration-none text-light m-3">
+                Productos
+              </Link>
+            </>)}
           </Nav>
 
-          <Nav id="cerrardos" className="justify-content-end">
+          <Nav className="justify-content-end">
             {!user.name && !partner.name
               ? (
-              <>
-                <Link to="loginpartner" className="m-2">
-                  <Button>Iniciar sesión Clientes</Button>
-                </Link>
-                <Link to="loginpartner" className="m-2">
-                  <Button>Iniciar sesión Distribuidores</Button>
-                </Link>
-                <Link to="login" className="m-2">
-                  <Button>Iniciar sesión Empleados</Button>
-                </Link>
-              </>
+                <>
+                  <Link to="loginpartner" className="m-2">
+                    <Button>Iniciar sesión Clientes</Button>
+                  </Link>
+                  <Link to="loginpartner" className="m-2">
+                    <Button>Iniciar sesión Distribuidores</Button>
+                  </Link>
+                  <Link to="login" className="m-2">
+                    <Button>Iniciar sesión Empleados</Button>
+                  </Link>
+                </>
                 )
               : null}
             {user.name || partner.name || (

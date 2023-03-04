@@ -67,12 +67,12 @@ const CreateUser = () => {
   return (
     <div className="container border- p-5" >
       <Form onSubmit={handleSubmit} className=" ">
-        <Form.Group controlId="formUserID">
-          <Form.Label>User ID *</Form.Label>
+      <Form.Group controlId="formEmail">
+          <Form.Label>Email *</Form.Label>
           <Form.Control
-            type="text"
-            name="userId"
-            value={user.userId}
+            type="email"
+            name="email"
+            value={user.email}
             onChange={handleChange}
             required
           />
@@ -120,12 +120,12 @@ const CreateUser = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email *</Form.Label>
+        <Form.Group controlId="formUserID">
+          <Form.Label>Documento *</Form.Label>
           <Form.Control
-            type="email"
-            name="email"
-            value={user.email}
+            type="text"
+            name="userId"
+            value={user.userId}
             onChange={handleChange}
             required
           />

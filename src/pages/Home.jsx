@@ -15,7 +15,7 @@ function Home () {
   console.log('par', type)
 
   return (
-    <div className="container p-3">
+    <div className="p-3">
       <div>
         <Card>
           <Card.Body className="text-center">
