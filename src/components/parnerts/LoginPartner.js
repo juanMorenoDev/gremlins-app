@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { setPartner } from "../../redux/reducer/partner/partnerSlice";
 
 const LoginPartner = () => {
@@ -24,28 +24,28 @@ const LoginPartner = () => {
         .post("http://localhost:3001/partner/login", {
           email: email,
         })
-        .then((response) => {
-          console.log("response",response.data);
+        .then(({ data }) => {
           // Aquí puedes redirigir al usuario a la página principal de la aplicación
-          localStorage.setItem( 
+          localStorage.setItem(
             "partner",
             JSON.stringify({
-              partnerId: response.data.partner.partnerId,
-              name: response.data.partner.name,
-              type: response.data.partner.type,
-              email: response.data.partner.email,
+              partnerId: data.partner.partnerId,
+              name: data.partner.name,
+              type: data.partner.type,
+              email: data.partner.email,
 
             })
           )
           dispatch(setPartner({
-           name:response.data.partner.name,
-           lastName:response.data.partner.lastName,
-            documentType:response.data.partner.documentType,
-            partnerId:response.data.partner.partnerId,
-            phone:response.data.partner.phone,
-            address:response.data.partner.address,
-            email:response.data.partner.email,
-            type:response.data.partner.type,            
+            _id: data.partner._id,
+            name: data.partner.name,
+            lastName: data.partner.lastName,
+            documentType: data.partner.documentType,
+            partnerId: data.partner.partnerId,
+            phone: data.partner.phone,
+            address: data.partner.address,
+            email: data.partner.email,
+            type: data.partner.type,
           }))
           navigate("/home")
         })
@@ -66,22 +66,22 @@ const LoginPartner = () => {
   return (
     <div className="align-items-center">
 
-    <Form noValidate validated={validated} onSubmit={handleSubmit} >
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Correo Electrónico</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="Ingrese su correo electrónico"
-          value={email}
-          onChange={handleEmailChange}
-          required
-        />
-        <Form.Control.Feedback type="invalid">
-          Por favor ingrese un correo electrónico válido.
-        </Form.Control.Feedback>
-      </Form.Group>
+      <Form noValidate validated={validated} onSubmit={handleSubmit} >
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Correo Electrónico</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Ingrese su correo electrónico"
+            value={email}
+            onChange={handleEmailChange}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Por favor ingrese un correo electrónico válido.
+          </Form.Control.Feedback>
+        </Form.Group>
 
-      {/*<Form.Group controlId="formBasicPassword">
+        {/*<Form.Group controlId="formBasicPassword">
         <Form.Label>Contraseña</Form.Label>
         <Form.Control
           type="password"
@@ -95,10 +95,10 @@ const LoginPartner = () => {
         </Form.Control.Feedback>
   </Form.Group>*/}
 
-      <Button variant="primary" type="submit">
-        Iniciar Sesión
-      </Button>
-    </Form>
+        <Button variant="primary" type="submit">
+          Iniciar Sesión
+        </Button>
+      </Form>
     </div>
   );
 };

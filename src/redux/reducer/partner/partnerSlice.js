@@ -1,30 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createDraftSafeSelector } from "@reduxjs/toolkit";
 
 const partnerSlice = createSlice({
   name: "partner",
   initialState: {
     name: "",
-    lastName:"",
-    documentType:"",
-    partnerId:null,
-    phone:"",
-    address:"",
-    email:"",
-    type:"",
-  },  
+    lastName: "",
+    documentType: "",
+    partnerId: null,
+    phone: "",
+    address: "",
+    email: "",
+    type: "",
+  },
   reducers: {
-    setPartner: (state, action) => {
-      state.name = action.payload.name;
-      state.lastName = action.payload.lastName;
-      state.documentType = action.payload.documentType;
-      state.partnerId = action.payload.partnerId;
-      state.phone = action.payload.phone;
-      state.address = action.payload.address;
-      state.email = action.payload.email;
-      state.type = action.payload.type;
-     
+    setPartner: (state, { payload }) => {
+      state._id = payload._id;
+      state.name = payload.name;
+      state.lastName = payload.lastName;
+      state.documentType = payload.documentType;
+      state.partnerId = payload.partnerId;
+      state.phone = payload.phone;
+      state.address = payload.address;
+      state.email = payload.email;
+      state.type = payload.type;
+
     },
-     unSetPartner:(state)=>{
+    unSetPartner: (state) => {
+      state._id = "";
       state.name = "";
       state.lastName = "";
       state.documentType = "";
@@ -33,11 +35,16 @@ const partnerSlice = createSlice({
       state.address = "";
       state.email = "";
       state.type = "";
-     }
+    }
   },
 });
 
-export const { setPartner,unSetPartner } = partnerSlice.actions;
+export const { setPartner, unSetPartner } = partnerSlice.actions;
 
 export default partnerSlice.reducer;
 
+
+export const selectPartnerId = createDraftSafeSelector(
+  [state => state._id],
+  (_id) => _id
+)
