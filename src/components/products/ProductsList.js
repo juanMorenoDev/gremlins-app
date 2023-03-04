@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
-import { selectPartnerId } from "../../redux/reducer/partner/partnerSlice";
+import { selectPartner } from "../../redux/reducer/partner/partnerSlice";
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const [order, setOrder] = useState({});
-  const clientId = useSelector(selectPartnerId)
-
+  const { _id: clientId, type} = useSelector(selectPartner)
+  const isClientLogged = clientId !== '' && type === 'CLIENTE'
   // Obtenemos la lista de productos desde el servidor
 
   const fetchData = async () => {
@@ -83,9 +83,9 @@ const ProductsList = () => {
                       <strong>Cantidad:</strong> {product.quantity}
                     </Card.Text>
                     <div className="d-flex justify-content-around">
-                      <Button variant="success" className="ml-2" onClick={() => addToOrder(product)}>
+                      {isClientLogged ? <Button variant="success" className="ml-2" onClick={() => addToOrder(product)}>
                         Agregar a la orden
-                      </Button>
+                      </Button> : ''}
                       <Button variant="primary">Editar</Button>
                       <Button variant="danger" className="ml-2">
                         Eliminar

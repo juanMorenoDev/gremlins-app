@@ -44,7 +44,7 @@ export const { setPartner, unSetPartner } = partnerSlice.actions;
 export default partnerSlice.reducer;
 
 
-export const selectPartnerId = createDraftSafeSelector(
-  [state => state._id],
-  (_id) => _id
+export const selectPartner = createDraftSafeSelector(
+  [state => state],
+  (partner) => [partner]
 )
