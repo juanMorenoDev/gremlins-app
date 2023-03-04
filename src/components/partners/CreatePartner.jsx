@@ -1,46 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const CreatePartner = () => {
   const navigate = useNavigate()
-  const [edit, setEdit] = useState(false)
   const { id } = useParams()
+  const selectedPartner = useSelector(state => state.partner.selectedPartner)
+  const isEdit = id && selectedPartner._id
 
-  const [partner, setPartner] = useState({
-    name: '',
-    lastName: '',
-    documentType: 'CC',
-    partnerId: '',
-    phone: '',
-    address: '',
-    email: '',
-    type: 'CLIENTE',
-    error: ''
-  })
-
-  useEffect(() => {
-    if (id) {
-      console.log('id', id)
-      setEdit(true)
-      axios.get(`${process.env.REACT_APP_BACKEND_URL}/partner/${id}`).then((response) => {
-        const { data } = response
-        console.log(data)
-        setPartner({
-          name: data.name,
-          lastName: data.lastName,
-          documentType: data.documentType,
-          partnerId: data.partnerId,
-          phone: data.phone,
-          address: data.address,
-          email: data.email,
-          type: data.type
-
-        })
+  const [partner, setPartner] = useState(isEdit
+    ? selectedPartner
+    : {
+        name: '',
+        lastName: '',
+        documentType: 'CC',
+        partnerId: '',
+        phone: '',
+        address: '',
+        email: '',
+        type: 'CLIENTE',
+        error: ''
       })
-    }
-  }, [id])
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
@@ -86,6 +68,18 @@ const CreatePartner = () => {
     <div className="container mt-5 p-5">
       <Form onSubmit={handleSubmit}>
         {partner.error && <p>{partner.error}</p>}
+        {isEdit && (
+          <Form.Group controlId="name">
+            <Form.Label>ID</Form.Label>
+            <Form.Control
+              type="text"
+              name="_id"
+              value={partner._id}
+              required
+              disabled
+            />
+          </Form.Group>
+        )}
         <Form.Group controlId="name">
           <Form.Label>Nombre</Form.Label>
           <Form.Control
@@ -171,7 +165,7 @@ const CreatePartner = () => {
           </Form.Control>
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-5">
-          {edit ? 'Actualizar Partner' : 'Crear Partner' }
+          {isEdit ? 'Actualizar Partner' : 'Crear Partner' }
         </Button>
       </Form>
     </div>

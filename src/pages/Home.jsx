@@ -2,7 +2,6 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import OrdersList from '../components/orders/OrdersList'
-import ClientsList from '../components/partners/GetClients'
 import PartnersList from '../components/partners/PartnersList'
 import ProductsList from '../components/products/ProductsList'
 
@@ -26,30 +25,30 @@ function Home () {
       <div>
         {role === 'RECEPCIONISTA'
           ? (
-          <PartnersList />
+            <>
+              <PartnersList type="CLIENTE" />
+              <PartnersList type="DISTRIBUIDOR" />
+            </>
             )
           : (role === 'EMPACADOR') || (role === 'TRANSPORTADOR')
               ? (
-          <OrdersList />
+              <OrdersList />
                 )
               : role === 'ADMINISTRADOR'
                 ? (
-          <>
-            <PartnersList />
-            <br />
-            <ClientsList />
-            <br />
-            <OrdersList />
-          </>
+                <>
+                  <PartnersList type="CLIENTE" />
+                  <PartnersList type="DISTRIBUIDOR" />
+                </>
                   )
                 : (type === 'CLIENTE') || (type === 'DISTRIBUIDOR')
                     ? (
-          <>
-            <ProductsList />
-          </>
+                  <>
+                    <ProductsList />
+                  </>
                       )
                     : (
-          <h1>NO TIENES PERMISOS PARA VER ESTA PAGINA</h1>
+                  <h1>NO TIENES PERMISOS PARA VER ESTA PAGINA</h1>
                       )}
       </div>
     </div>

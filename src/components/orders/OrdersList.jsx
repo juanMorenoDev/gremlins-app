@@ -16,7 +16,7 @@ const OrdersList = () => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get(ordersUrl)
-      setOrders(response.data)
+      setOrders(response.data.filter(order => order.clientId !== null))
     } catch (error) {
       console.error(error)
     }

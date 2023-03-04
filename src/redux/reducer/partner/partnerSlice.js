@@ -10,7 +10,8 @@ const partnerSlice = createSlice({
     phone: '',
     address: '',
     email: '',
-    type: ''
+    type: '',
+    selectedPartner: {}
   },
   reducers: {
     setPartner: (state, { payload }) => {
@@ -23,6 +24,9 @@ const partnerSlice = createSlice({
       state.address = payload.address
       state.email = payload.email
       state.type = payload.type
+    },
+    setSelectedPartner: (state, { payload }) => {
+      state.selectedPartner = payload
     },
     unSetPartner: (state) => {
       state._id = ''
@@ -38,6 +42,6 @@ const partnerSlice = createSlice({
   }
 })
 
-export const { setPartner, unSetPartner } = partnerSlice.actions
+export const { setPartner, unSetPartner, setSelectedPartner } = partnerSlice.actions
 
 export default partnerSlice.reducer

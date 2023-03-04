@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setSelectedPartner } from '../../redux/reducer/partner/partnerSlice'
 
-const PartnersList = () => {
+const PartnersList = ({ type }) => {
+  const navigate = useNavigate()
   // Estado para almacenar la lista de Partners
   const [partners, setPartners] = useState([])
+  const dispatch = useDispatch()
   console.log(partners)
-  /* const [editar, setEditar] = useState({
-    editar: false,
-    partnerId: null,
-  }) */
-  // const navigate = useNavigate();
-
-  // Función para obtener la lista de Partners desde el servidor
 
   const fetchPartners = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/partner`)
       console.log(response.data)
-      setPartners(response.data)
+      const filteredPartners = response.data.filter(client => client.type === type)
+      setPartners(filteredPartners)
     } catch (error) {
       console.log(error)
     }
@@ -37,26 +35,10 @@ const PartnersList = () => {
     }
   }
 
-  /* const editPartner = async (id) => {
-    console.log("miid", id);
-    navigate("/home");
-
-    /*
-    setEditar({
-      editar: true,
-      partnerId: editar,
-    })
-    const partner = partners.find((partner) => partner.id === id);
-    if (!partner) {
-      return Promise.reject(`Partner with id ${id} not found`);
-    }
-
-    return axios
-      .put(`${process.env.REACT_APP_BACKEND_URL}/partner/${id}`, partner)
-      .then((response) => response.data)
-      .catch((error) => Promise.reject(error));
-
-  }; */
+  const onEdit = (partner) => {
+    navigate(`/partner/register/${partner._id}`)
+    dispatch(setSelectedPartner(partner))
+  }
 
   // Función para renderizar la tabla de Partners
   const renderPartnersTable = () => {
@@ -87,17 +69,13 @@ const PartnersList = () => {
               <td>{partner.email}</td>
               <td>{partner.type}</td>
               <td>
-                <Link to={`/partner/register/${partner._id}`}>
-                  <Button
-                    variant="info"
-                    size="sm"
-                    /*                 onClick={() => //editPartner(partner._id, console.log("ir")
-
-                  } */
-                  >
-                    Editar
-                  </Button>
-                </Link>{' '}
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={() => onEdit(partner)}
+                >
+                  Editar
+                </Button>
                 <Button
                   variant="danger"
                   size="sm"
@@ -119,7 +97,7 @@ const PartnersList = () => {
 
   return (
     <div>
-      <h1>Lista de Partners</h1>
+      <h1>Lista de { type === 'CLIENTE' ? 'Clientes' : 'Distribuidores'} </h1>
       {renderPartnersTable()}
     </div>
   )

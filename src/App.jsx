@@ -23,7 +23,8 @@ function App () {
         <Route path="loginpartner" element={<LoginPartner />} />
         <Route path="partner/register" element={<CreatePartner />} />
         <Route path="partner/register/:id" element={<CreatePartner />} />
-        <Route path="partner/partnersList" element={<PartnersList />} />
+        <Route path="partners" element={<PartnersList type="DISTRIBUIDOR" />} />
+        <Route path="clients" element={<PartnersList type="CLIENTE" />} />
         <Route path="products/register" element={<CreateProduct />} />
         <Route path="orders" element={<OrdersList />} />
         <Route path="products" element={<ProductsList />} />

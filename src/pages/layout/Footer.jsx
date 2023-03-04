@@ -20,11 +20,15 @@ function Footer () {
           <Navegation />
         </div>
         <Navbar.Text>
-          {user.role === 'RECEPCIONISTA' && (
+          {user.role === 'ADMINISTRADOR' && (
             <>
               <Link to="partner/register" className="text-success p-3">
                 Crear Partner
               </Link>
+            </>
+          )}
+          {(user.role === 'ADMINISTRADOR' || partner.type === 'DISTRIBUIDOR') && (
+            <>
               <Link to="products/register" className="text-success">
                 Crear Producto
               </Link>

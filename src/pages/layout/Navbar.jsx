@@ -39,6 +39,8 @@ function NavBar () {
               <Link Link to="orders" className="text-decoration-none text-light m-3">
                 Ver ordenes
               </Link>
+            </>)}
+            {(partner.type === 'CLIENTE' || user.role === 'ADMINISTRADOR') && (<>
               <Link Link to="products" className="text-decoration-none text-light m-3">
                 Productos
               </Link>
