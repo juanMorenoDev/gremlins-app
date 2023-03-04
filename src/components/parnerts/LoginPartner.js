@@ -64,7 +64,7 @@ const LoginPartner = () => {
   };*/
 
   return (
-    <div className="align-items-center">
+    <div className=" container mt-5">
 
       <Form noValidate validated={validated} onSubmit={handleSubmit} >
         <Form.Group controlId="formBasicEmail">
@@ -95,7 +95,7 @@ const LoginPartner = () => {
         </Form.Control.Feedback>
   </Form.Group>*/}
 
-        <Button variant="primary" type="submit">
+        <Button  className="mt-3" variant="primary" type="submit">
           Iniciar Sesión
         </Button>
       </Form>

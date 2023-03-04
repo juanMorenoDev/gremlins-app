@@ -37,7 +37,7 @@ function NavBar() {
             </Link>
           </Nav>
 
-          <Nav className="justify-content-end">
+          <Nav id="cerrardos" className="justify-content-end">
             {!user.name && !partner.name ? (
               <>
                 <Link to="loginpartner" className="m-2">
@@ -57,12 +57,12 @@ function NavBar() {
               </Link>
             )}
             {(user.name && (
-              <Button className="m-2 bg-danger" onClick={logout}>
+              <Button  className="m-2 bg-danger" onClick={logout}>
                 Cerrar Sesión {user.name}
               </Button>
             )) ||
               (partner.name && (
-                <Button className="m-2 bg-danger" onClick={logout}>
+                <Button  className="m-2 bg-danger" onClick={logout}>
                   Cerrar Sesión {partner.name}
                 </Button>
               ))}

@@ -1,6 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { user } from "../../redux/store";
+
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Navegation from "./Navegation";
@@ -14,10 +14,8 @@ function Footer() {
   return (
     <Navbar bg="dark" fixed="bottom">
       <Container>
-        <Navbar.Brand>
-          <Link to="/">Home</Link>
-        </Navbar.Brand>
-        <div className="m-4">
+        
+        <div className="m-2">
           <Navegation />
         </div>
         <Navbar.Text>

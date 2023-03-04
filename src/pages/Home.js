@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import OrdersList from "../components/orders/OrdersList";
 import ClientsList from "../components/parnerts/GetClients";
 import PartnersList from "../components/parnerts/ParnertsList";
 import ProductsList from "../components/products/ProductsList";
@@ -10,15 +11,12 @@ function Home() {
   const user = useSelector((state) => state.user);
   const { role } = user;
   const { type, name } = useSelector((state) => state.partner);
-  const navigate = useNavigate();
-  //const [roleUser, setRoleUser] = useState(role);
-  //const navigate = useNavigate()
+  
+
   console.log("role", role);
   console.log("par", type);
 
-  function handleGoBack() {
-    navigate(-1);
-  }
+
 
   return (
     <div className="container p-5 mt-5">
@@ -33,13 +31,15 @@ function Home() {
       <div>
         {role === "RECEPCIONISTA" ? (
           <PartnersList />
-        ) : role === "EMPACADOR" ? (
-          <ClientsList />
+        ) :( role === "EMPACADOR")||( role === "TRANSPORTADOR") ? (
+          <OrdersList />
         ) : role === "ADMINISTRADOR" ? (
           <>
             <PartnersList />
             <br />
             <ClientsList />
+            <br />
+            <OrdersList />
           </>
         ) : (type === "CLIENTE")||(type==="DISTRIBUIDOR") ? (
           <>
