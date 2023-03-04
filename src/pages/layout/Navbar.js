@@ -4,13 +4,14 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { unsetUser } from "../../redux/reducer/user/userSlice"; 
-import {unSetPartner} from  "../../redux/reducer/partner/partnerSlice";
+import { unsetUser } from "../../redux/reducer/user/userSlice";
+import { unSetPartner } from "../../redux/reducer/partner/partnerSlice";
 import { useNavigate } from "react-router-dom";
 
 function NavBar() {
-  const { user } = useSelector((state) => state.user);
-  const { partner } = useSelector((state) => state.partner);
+  const user = useSelector((state) => state.user);
+  console.log("user", user);
+  const partner = useSelector((state) => state.partner);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,33 +26,46 @@ function NavBar() {
   return (
     <>
       <Navbar bg="dark " variant="dark">
-        <Container >
-          <Navbar.Brand >
-            <Link to="/" style={{ padding: "5px" }}>
+        <Container>
+          <Nav className="justify-content-start">
+            <Link to="/" className="text-decoration-none m-3">
               Gremlins
             </Link>
-          </Navbar.Brand>
-          <Nav >
-            <Link to="/" className="text-decoration-none m-3 " >
+
+            <Link to="/" className="text-decoration-none m-3 ">
               Home
             </Link>
-            <Link to="loginpartner" className="m-2">
-              <Button>Iniciar sesión Clientes</Button>
-            </Link>
-            <Link to="loginpartner" className="m-2">
-              <Button>Iniciar sesión Distribuidores</Button>
-            </Link>
-            <Link to="login" className="m-2">
-              <Button>Iniciar sesión Empleados</Button>
-            </Link>
-            <Link to="/newuser">
-            <Button  className="m-2 bg-success">
-              Registrase
-            </Button>
-            </Link>
-            <Button className="m-2 bg-danger" onClick={logout}>
-              Cerrar Sesión
-            </Button>
+          </Nav>
+
+          <Nav className="justify-content-end">
+            {!user.name && !partner.name ? (
+              <>
+                <Link to="loginpartner" className="m-2">
+                  <Button>Iniciar sesión Clientes</Button>
+                </Link>
+                <Link to="loginpartner" className="m-2">
+                  <Button>Iniciar sesión Distribuidores</Button>
+                </Link>
+                <Link to="login" className="m-2">
+                  <Button>Iniciar sesión Empleados</Button>
+                </Link>
+              </>
+            ) : null}
+            {user.name || partner.name || (
+              <Link to="/newuser">
+                <Button className="m-2 bg-success">Registrase</Button>
+              </Link>
+            )}
+            {(user.name && (
+              <Button className="m-2 bg-danger" onClick={logout}>
+                Cerrar Sesión {user.name}
+              </Button>
+            )) ||
+              (partner.name && (
+                <Button className="m-2 bg-danger" onClick={logout}>
+                  Cerrar Sesión {partner.name}
+                </Button>
+              ))}
           </Nav>
         </Container>
       </Navbar>

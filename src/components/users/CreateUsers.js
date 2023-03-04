@@ -158,7 +158,7 @@ const CreateUser = () => {
           </Form.Control>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="mt-5">
           Submit
         </Button>
       </Form>

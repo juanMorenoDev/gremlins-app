@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PartnersList = () => {
   // Estado para almacenar la lista de Partners
   const [partners, setPartners] = useState([]);
+  console.log(partners)
+  /*const [editar, setEditar] = useState({
+    editar: false,
+    partnerId: null,
+  })*/
+  //const navigate = useNavigate();
 
   // Función para obtener la lista de Partners desde el servidor
 
   const fetchPartners = async () => {
     try {
       const response = await axios.get("http://localhost:3001/partner");
-      console.log(response.data)
+      console.log(response.data);
       setPartners(response.data);
     } catch (error) {
       console.log(error);
@@ -30,7 +38,15 @@ const PartnersList = () => {
     }
   };
 
-  const editPartner = async (id, partners) => {
+  /*const editPartner = async (id) => {
+    console.log("miid", id);
+    navigate("/home");
+
+    /*
+    setEditar({
+      editar: true,
+      partnerId: editar,
+    })
     const partner = partners.find((partner) => partner.id === id);
     if (!partner) {
       return Promise.reject(`Partner with id ${id} not found`);
@@ -40,8 +56,8 @@ const PartnersList = () => {
       .put(`http://localhost:3001/partner/${id}`, partner)
       .then((response) => response.data)
       .catch((error) => Promise.reject(error));
-  };
-console.log(partners)
+    
+  };*/
 
   // Función para renderizar la tabla de Partners
   const renderPartnersTable = () => {
@@ -62,6 +78,7 @@ console.log(partners)
         </thead>
         <tbody>
           {partners.map((partner) => (
+            console.log(partner._id),
             <tr key={partner.partnerId}>
               <td>{partner.name}</td>
               <td>{partner.lastName}</td>
@@ -72,13 +89,17 @@ console.log(partners)
               <td>{partner.email}</td>
               <td>{partner.type}</td>
               <td>
-                <Button
-                  variant="info"
-                  size="sm"
-                  onClick={() => editPartner(partner._id, partners)}
-                >
-                  Editar
-                </Button>{" "}
+                <Link to={`/parnert/register/${partner._id}`}>
+                  <Button
+                    variant="info"
+                    size="sm"
+                    /*                 onClick={() => //editPartner(partner._id, console.log("ir")
+                  
+                  }*/
+                  >
+                    Editar
+                  </Button>
+                </Link>{" "}
                 <Button
                   variant="danger"
                   size="sm"
