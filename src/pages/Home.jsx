@@ -15,11 +15,10 @@ function Home () {
   console.log('par', type)
 
   return (
-    <div className="container p-5 mt-5">
+    <div className="container p-3">
       <div>
         <Card>
           <Card.Body className="text-center">
-            {' '}
             Welcome {(role && user.name) || (type && name)}{' '}
           </Card.Body>
         </Card>

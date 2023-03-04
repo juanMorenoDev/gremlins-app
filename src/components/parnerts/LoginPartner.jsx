@@ -21,7 +21,7 @@ const LoginPartner = () => {
 
     if (form.checkValidity() === true) {
       axios
-        .post('http://localhost:3001/partner/login', {
+        .post(`${process.env.REACT_APP_BACKEND_URL}/partner/login`, {
           email
         })
         .then(({ data }) => {

@@ -1,4 +1,4 @@
-import { createSlice, createDraftSafeSelector } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const partnerSlice = createSlice({
   name: 'partner',
@@ -41,8 +41,3 @@ const partnerSlice = createSlice({
 export const { setPartner, unSetPartner } = partnerSlice.actions
 
 export default partnerSlice.reducer
-
-export const selectPartner = createDraftSafeSelector(
-  [state => state],
-  (partner) => [partner]
-)

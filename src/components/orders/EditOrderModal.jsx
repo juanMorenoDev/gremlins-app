@@ -20,7 +20,7 @@ const EditOrderModal = ({ selectedOrder, isOpen, onClose }) => {
     try {
       // Enviar solicitud
       await axios.put(
-        'http://localhost:3001/order',
+        `${process.env.REACT_APP_BACKEND_URL}/order`,
         order
       )
       onClose()

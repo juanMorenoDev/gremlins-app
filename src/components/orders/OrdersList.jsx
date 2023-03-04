@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { Table, Button } from 'react-bootstrap'
 import EditOrderModal from './EditOrderModal'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const OrdersList = () => {
   // Estado para almacenar la lista de Orders
   const [orders, setOrders] = useState([])
   const [selectedOrder, setSelectedOrder] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { type, _id } = useSelector(state => state.partner)
+  const ordersUrl = type === 'CLIENTE' ? `${process.env.REACT_APP_BACKEND_URL}/order/query?clientId=${_id}` : `${process.env.REACT_APP_BACKEND_URL}/order`
 
   // Función para obtener la lista de Orders desde el servidor
   const fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/order')
+      const response = await axios.get(ordersUrl)
       setOrders(response.data)
     } catch (error) {
       console.error(error)
@@ -22,7 +25,7 @@ const OrdersList = () => {
   // Función para eliminar un Order
   const deleteOrder = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/order/${id}`)
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/order/${id}`)
       // Actualizamos la lista de Orders
       fetchOrders()
     } catch (error) {
@@ -67,7 +70,7 @@ const OrdersList = () => {
           {orders.map((order) => (
             <tr key={order._id}>
               <td>{order._id}</td>
-              <td>{order.clientId.firstName} {order.clientId.lastName}</td>
+              <td>{order.clientId.name} {order.clientId.lastName}</td>
               <td>{order.clientId.documentType} {order.clientId.partnerId}</td>
               <td>{order.clientId.phone}</td>
               <td>{order.clientId.address}</td>

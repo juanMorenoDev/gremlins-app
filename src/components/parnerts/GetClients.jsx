@@ -7,7 +7,7 @@ const ClientsList = () => {
 
   useEffect(() => {
     const fetchClients = async () => {
-      const response = await axios.get('http://localhost:3001/partner')
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/partner`)
       console.log('res', response.data)
       const filteredClients = response.data.filter(client => client.type === 'CLIENTE')
       setClients(filteredClients)

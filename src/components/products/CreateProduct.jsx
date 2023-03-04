@@ -35,7 +35,7 @@ const CreateProduct = () => {
     // Enviamos la información del formulario al servidor
     try {
       const response = await axios.post(
-        'http://localhost:3001/product',
+        `${process.env.REACT_APP_BACKEND_URL}/product`,
         product
       )
       console.log(response.data)

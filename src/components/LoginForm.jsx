@@ -22,7 +22,7 @@ const LoginForm = () => {
 
     if (form.checkValidity() === true) {
       axios
-        .post('http://localhost:3001/user/login', {
+        .post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
           username: email,
           password
         })

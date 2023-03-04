@@ -45,7 +45,7 @@ const CreateUser = () => {
     }
     // Enviar información al backend
     axios
-      .post('http://localhost:3001/user/register', user)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/user/register`, user)
       .then((response) => {
         setUser({
           userId: '',

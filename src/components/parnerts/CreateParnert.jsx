@@ -24,7 +24,7 @@ const CreatePartner = () => {
     if (id) {
       console.log('id', id)
       setEdit(true)
-      axios.get(`http://localhost:3001/partner/${id}`).then((response) => {
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}/partner/${id}`).then((response) => {
         const { data } = response
         console.log(data)
         setPartner({
@@ -66,11 +66,11 @@ const CreatePartner = () => {
 
       // Enviar solicitud
       if (id) {
-        const actualizando = await axios.put(`http://localhost:3001/partner/${id}`, partner)
+        const actualizando = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/partner/${id}`, partner)
         console.log(actualizando)
       } else {
         const creando = await axios.post(
-          'http://localhost:3001/partner',
+          `${process.env.REACT_APP_BACKEND_URL}/partner`,
           partner
         )
         console.log(creando)

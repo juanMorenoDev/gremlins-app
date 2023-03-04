@@ -17,7 +17,7 @@ const PartnersList = () => {
 
   const fetchPartners = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/partner')
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/partner`)
       console.log(response.data)
       setPartners(response.data)
     } catch (error) {
@@ -28,7 +28,7 @@ const PartnersList = () => {
   // Función para eliminar un Partner
   const deletePartner = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/partner/${id}`)
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/partner/${id}`)
       // Actualizamos la lista de Partners
       const newPartners = partners.filter((partner) => partner._id !== id)
       setPartners(newPartners)
@@ -52,7 +52,7 @@ const PartnersList = () => {
     }
 
     return axios
-      .put(`http://localhost:3001/partner/${id}`, partner)
+      .put(`${process.env.REACT_APP_BACKEND_URL}/partner/${id}`, partner)
       .then((response) => response.data)
       .catch((error) => Promise.reject(error));
 
